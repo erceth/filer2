@@ -1,0 +1,165 @@
+@import "variables.less";
+@import "home.less";
+@import "about.less";
+@import "jsflags.less";
+
+
+/** WRAPPER ***/
+.wrapper {
+	min-height: 100%;
+	position: absolute;
+	padding-bottom: 60px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAG0lEQVQIW2N89uzOfykpFUZGBgYGBhCHESYCAKNpC6uuHVROAAAAAElFTkSuQmCC) repeat;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+
+/*** HEADER ***/
+header {
+	background: @primary-color;
+	height: 60px;
+}
+.header-container {
+	margin-left: 60px;
+	margin-right: 60px;
+	height: 100%;
+	@media (max-width: 767px) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.site-title h1 {
+	margin-top: 10px;
+	color: #fff;
+	
+}
+
+.logo {
+	height: 60px;
+	cursor: pointer;
+
+}
+
+.hamburger {
+	position: absolute;
+	right: 10px;
+	top: 30px;
+	display: none;
+	@media (max-width: @screen-sm) {
+		display: block;
+	}
+}
+
+.navigation {
+	top: 30px;
+	.nav-list {
+		float: right;
+	}
+	ul {
+		list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	}
+	a {
+		color: #fff;
+		display: block;
+  		padding: 5px 15px;
+  		text-transform: capitalize;
+	}
+	.nav-item {
+		background: rgba(0,0,0,.2);
+		float: left;
+		border-left: 1px solid;
+		&:last-child {
+			border-right: 1px solid;
+		}
+		&:hover {
+			background: rgba(0,0,0,.5);
+		}
+	}
+	display: block;
+
+	@media (max-width: @screen-sm) {
+		display: none;
+		background: red;
+		position: absolute;
+		top: 60px !important;
+		right: 0;
+		z-index: 10;
+		li {
+			width: 100%;
+		}
+	}
+
+}
+
+.showMobileMenu {
+	display: block;
+}
+
+/*** MID ***/
+.mid {
+	padding: 10px 60px;
+	padding-bottom: 120px;
+	@media (max-width: 767px) {
+		padding-left: 1px;
+		padding-right: 1px;
+	}
+}
+
+
+/*** footer ***/
+
+footer {
+	background: @secondary-color;
+	bottom: 0;
+	height: 60px;
+	color: #fff;
+	&.footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+}
+
+.footer-container {
+	margin-left: 60px;
+	margin-right: 60px;
+	overflow: hidden;
+	height: 100%;
+	@media (max-width: 767px) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+.no-margin {
+	margin: 0 !important;
+}
+
+#kc {
+	float: right;
+}
+
+div.page {
+	
+}
+
+
+
+
+
+/*fix bootstrap*/
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+	padding: 0;
+}

@@ -1,0 +1,9 @@
+RewriteEngine On
+#HTTP request arrives and if no physical file 
+RewriteCond %{REQUEST_FILENAME} !-f
+#or path
+RewriteCond %{REQUEST_FILENAME} !-d
+#or symbolic link
+RewriteCond %{REQUEST_FILENAME} !-l
+#try index.php
+RewriteRule .* index.php [L,QSA]

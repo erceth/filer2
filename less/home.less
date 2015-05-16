@@ -1,0 +1,72 @@
+.home {
+	.project-container {
+		
+
+	}
+
+	.project {
+		padding-right: 20px;
+		@media (min-width: 768px) {
+			height: 300px;	
+		}
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+
+	.splash {
+		background: @secondary-color;
+		border: 1px solid;
+  		border-top: 0;
+		.item {
+			max-width: 1000px;
+			margin: auto;
+			height: 300px;
+			@media (min-width: @screen-xs) { 
+				height: 300px;
+			}
+			@media (min-width: @screen-sm) { 
+				height: 400px;
+			}
+			@media (min-width: @screen-md) { 
+				height: 500px;
+			}
+			@media (min-width: @screen-lg) { 
+				height: 600px;
+			}
+		}
+		
+	}
+
+	.blobs {
+		padding: @blob-spacing 0;
+		.blob-container {
+			@media (min-width: @screen-md) {
+				padding: 0 @blob-spacing-one-thirds 0;
+				&:first-child {
+					padding-left: 0;
+					padding-right: @blob-spacing-two-thirds;
+				}
+				&:last-child {
+					padding-left: @blob-spacing-two-thirds;
+					padding-right: 0;
+				}
+
+			}
+			
+
+			.blob {
+				border: 1px solid black;
+				padding: @blob-spacing;
+				background: #fff;	
+				height: 170px;
+			}
+			h3 {
+				margin: 0 0 @blob-spacing 0;
+			}
+
+		}
+	}
+
+
+}
