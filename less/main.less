@@ -56,6 +56,18 @@ header {
 	}
 }
 
+/* Chrome, Safari, Opera */
+@-webkit-keyframes scrolldown {
+    from {height: 0%;}
+    to {height: 100%;}
+}
+
+/* Standard syntax */
+@keyframes scrolldown {
+    from {background-color: red;}
+    to {background-color: yellow;}
+}
+
 .navigation {
 	top: 30px;
 	.nav-list {
@@ -96,11 +108,15 @@ header {
 			width: 100%;
 		}
 	}
-
 }
 
 .showMobileMenu {
 	display: block;
+	width: 100%;
+	-webkit-animation-name: scrolldown; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: scrolldown;
+    animation-duration: 4s;
 }
 
 /*** MID ***/

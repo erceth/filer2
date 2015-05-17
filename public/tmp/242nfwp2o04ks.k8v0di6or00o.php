@@ -53,21 +53,21 @@
 	    		<h3>About Eric</h3>
 	    		<p>I am a Front-end Web Developer with <span><?php echo $timeExperience; ?></span> of experience.</p>  
 	    		<p>This sites allows me to show off my projects.</p>
-	    		<div><a ui-sref="about">Learn more</a></div>
+	    		<div><a href="about">Learn more</a></div>
 	    	</div>
     	</div>
     	<div class="blob-container col-xs-12 col-md-4">
     		<div class="blob">
 	    		<h3>My Projects</h3>
 	    		<p>Personal projects and work projects I've created over the years</p>
-	    		<div><a ui-sref="projects">Learn more</a></div>
+	    		<div><a href="projects">Learn more</a></div>
     		</div>
     	</div>
     	<div class="blob-container col-xs-12 col-md-4">
     		<div class="blob">
 	    		<h3>Contact</h3>
 	    		<p>My contact information</p>
-	    		<div><a ui-sref="contact">Learn more</a></div>
+	    		<div><a href="contact">Learn more</a></div>
 	    	</div>
     	</div>
     </div>
