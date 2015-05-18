@@ -1,0 +1,1 @@
+Counts all the words on a web page.

@@ -12,24 +12,21 @@
 
 </head>
 
-<body ng-controller="AppCtrl">
+<body class="preload">
     <div class="wrapper">
         <header class="col-xs-12" ng-hide="hideFooterHeader()">
         	<div class="header-container">
 	            <div class="col-xs-2 col-sm-4 site-title">
 	            	<h1>Eric<span class="hidden-sm hidden-xs"> Ethington</span></h1>
 	            </div>
-	            <div class="navigation col-xs-10 col-sm-8">
-	                <ul class="nav-list">
-	                    <li class="nav-item"><a href="/">home</a></li>
-	                    <li class="nav-item"><a href="/about">about</a></li>
-	                    <li class="nav-item"><a href="/about">resume</a></li>
-	                    <li class="nav-item"><a href="/projects">projects</a></li>
-	                    <li class="nav-item"><a href="/about">contact</a></li>
-	                </ul>
+	            <div class="navigation hidden-xs hidden-sm col-sm-8">
+	                <include href="{{ @navigation_path}}" />
 	            </div>
-	            <span class="hamburger">===</span>
+	            <span class="hamburger hidden-md hidden-lg">===</span>
+	            <div class="mobile-navigation hidden-md hidden-lg col-xs-12">
+	                <include href="{{ @navigation_path}}" />
+	            </div>
+	            
 	        </div>
         </header>
         <div class="mid">
-        	

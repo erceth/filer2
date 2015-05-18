@@ -2,6 +2,7 @@
 @import "home.less";
 @import "about.less";
 @import "jsflags.less";
+@import "projects.less";
 
 
 /** WRAPPER ***/
@@ -50,35 +51,15 @@ header {
 	position: absolute;
 	right: 10px;
 	top: 30px;
-	display: none;
-	@media (max-width: @screen-sm) {
-		display: block;
-	}
 }
 
-/* Chrome, Safari, Opera */
-@-webkit-keyframes scrolldown {
-    from {height: 0%;}
-    to {height: 100%;}
-}
-
-/* Standard syntax */
-@keyframes scrolldown {
-    from {background-color: red;}
-    to {background-color: yellow;}
-}
-
-.navigation {
-	top: 30px;
-	.nav-list {
-		float: right;
-	}
-	ul {
-		list-style-type: none;
-	    margin: 0;
-	    padding: 0;
-	}
-	a {
+//styling for navigation snippet
+.nav-list { 
+	float: right;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    a {
 		color: #fff;
 		display: block;
   		padding: 5px 15px;
@@ -95,28 +76,22 @@ header {
 			background: rgba(0,0,0,.5);
 		}
 	}
-	display: block;
-
-	@media (max-width: @screen-sm) {
-		display: none;
-		background: red;
-		position: absolute;
-		top: 60px !important;
-		right: 0;
-		z-index: 10;
-		li {
-			width: 100%;
-		}
-	}
 }
 
-.showMobileMenu {
-	display: block;
-	width: 100%;
-	-webkit-animation-name: scrolldown; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
-    animation-name: scrolldown;
-    animation-duration: 4s;
+.navigation {
+	top: 30px;
+}
+.mobile-navigation {
+	position: relative;
+	z-index: 12;
+	display: none;
+	.nav-list {
+		width: 100%;
+	}
+	.nav-item {
+		width: 100%;
+	}
+
 }
 
 /*** MID ***/
@@ -127,6 +102,7 @@ header {
 		padding-left: 1px;
 		padding-right: 1px;
 	}
+	overflow: hidden;
 }
 
 
@@ -178,4 +154,13 @@ div.page {
 
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
 	padding: 0;
+}
+
+
+/* prevents animations from running on page load*/
+.preload * {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -ms-animation: none !important;
+  -o-animation: none !important;
 }
