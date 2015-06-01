@@ -56,6 +56,50 @@
 	    }
 	);
 
+	$f3->route('POST /admin/new-user', function($f3) {
+			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
+				global $users;
+				$users->name = $f3->get("POST.name");
+				$users->password = $f3->get("POST.password");
+				$users->admin = $f3->get("POST.admin");
+				$users->save();
+				$f3->reroute('@admin');
+			} else {
+				$f3->reroute('@home');
+			}
+	    }
+	);
+
+	$f3->route('POST /admin/delete-user', function($f3) {
+			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
+				global $files;
+				global $database;
+
+				//delete users files
+				$all_user_files = $files->find("user_id='" . $f3->get("POST.userID") . "'");
+				foreach($all_user_files as $file) {
+					$fileName = "../files/" . $file->file_name;
+					if (is_file($fileName)) {
+						if(!unlink($fileName)) {
+							echo "problem deleting file" . $filename;
+							return;
+						}
+					}
+				}
+
+				$userID = $f3->get("POST.userID");
+				$database->begin(); //database transaction
+				$database->exec("DELETE FROM users WHERE id=?", $userID);
+				$database->exec("DELETE FROM files WHERE user_id=?", $userID);
+				$database->commit();
+
+				$f3->reroute('@admin');
+			} else {
+				$f3->reroute('@home');
+			}
+	    }
+	);
+
 	$f3->route('POST /admin/upload-file', function($f3) {
 			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
 				global $files;
@@ -128,6 +172,11 @@
 	$f3->route('GET /download/@filename', function ($f3, $params) {
 		$web = \Web::instance();
 		$web->send("../files/" . $f3->get("PARAMS.filename"), NULL, 2048, true );
+    });
+
+    $f3->route('GET /logout', function ($f3, $params) {
+		$f3->clear('SESSION');
+		$f3->reroute('@home');
     });
 
 

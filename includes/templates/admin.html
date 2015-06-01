@@ -1,5 +1,24 @@
-<div class="col-xs-12 admin page">
+<div class="col-xs-6 admin page">
 	<repeat group="{{ @users }}" value="{{ @user }}">
 	    <p>name: <a href="/admin/user/{{@user['id']}}">{{ @user["name"] }}</a></p>
+	    <form action="/admin/delete-user" method="post">
+	    	<input type="hidden" name="userID" value="{{ @user['id'] }}">
+	    	<input type="submit" name="submit" value="delete">
+	    </form>
+
 	</repeat>
 </div>
+<div class="col-xs-6">
+	<h3>New User</h3>
+	<form action="/admin/new-user" method="post">
+		<input type="text" name="name" placeholder="FirstName LastName"><br>
+		<input type="password" name="password" placeholder="password"><br>
+		<input type="password" name="confirm-password" placeholder="confirm password"><br>
+		<input type="radio" name="admin" value="1"><label for="admin">admin</label>
+		<input type="radio" name="admin" value="0" checked="checked"><label for="admin">not admin</label>
+		<input type="submit" name="submit" value="Create User">
+	</form>
+
+</div>
+
+

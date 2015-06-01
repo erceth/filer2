@@ -14,7 +14,10 @@
 	
 	<div class="col-xs-6">
 		<repeat group="{{ @files }}" value="{{ @file }}">
-			<div> {{ @file["file_name"] }} <a href="/view/{{ @file["file_name"] }}"> view </a> <a href="/download/{{ @file["file_name"] }}"> download </a></div>
+			<div> {{ @file["date"] }} <a href="/view/{{ @file["file_name"] }}"> view </a> <a href="/download/{{ @file["file_name"] }}"> download </a></div>
 		</repeat>
+	</div>
+	<div class="col-xs-12">
+		<a class="btn btn-default" href="/admin">back to admin</a>
 	</div>
 </div>
