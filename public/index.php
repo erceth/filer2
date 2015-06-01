@@ -11,6 +11,8 @@
 	//$f3->set('DEBUG',3);
 
 	require_once($f3->get("CLASSES_PATH") . "/database.php");
+	require_once($f3->get("CLASSES_PATH") . "/user.php");
+	require_once($f3->get("CLASSES_PATH") . "/files.php");
 
 	$template = new Template;
 	echo $template->render($f3->get("TEMPLATE_PATH") . "/header.html");
@@ -21,14 +23,13 @@
 	    }
 	);
 
+
 	$f3->route('GET @admin: /admin', function($f3) {
 			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
 				global $template;
-				global $database;
+				global $users;
 				//get all non admin users
-				$f3->set( "users", $database->exec("SELECT * FROM users WHERE admin=?", 0) );
-
-				
+				$f3->set("users", $users->find(array('admin=?','0')) ); //set users for template use
 	        	echo $template->render($f3->get("TEMPLATE_PATH") ."/admin.html");
 			} else {
 				$f3->reroute('@home');
@@ -36,16 +37,17 @@
 	    }
 	);
 
-	$f3->route('GET @admin: /admin/user/@userID', function($f3) {
+	$f3->route('GET /admin/user/@userID', function($f3) {
 			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
 				global $template;
-				global $database;
-				//get all non admin users
-				$f3->set( "user_details", $database->exec("SELECT * FROM users WHERE id=?", $f3->get("PARAMS.userID")) );
-				if (count($f3->get("user_details")) < 1 ) {
-					//404
-					$f3->reroute('@home');	
-				}
+				global $users;
+				global $files;
+				$users->load(array("id=?", $f3->get("PARAMS.userID") ))->copyTo("user_details");
+				$f3->set("files", $files->find("user_id='" . $f3->get("PARAMS.userID") . "'"));
+				// if ($f3->get("user_details")) {
+				// 	//404
+				// 	$f3->reroute('@home');	
+				// }
 				
 	        	echo $template->render($f3->get("TEMPLATE_PATH") ."/admin_user_details.html");
 			} else {
@@ -56,6 +58,7 @@
 
 	$f3->route('POST /admin/upload-file', function($f3) {
 			if ($f3->get("SESSION.loggedIn") && $f3->get("SESSION.admin")) {
+				global $files;
 				$web = \Web::instance();
 				$f3->set('UPLOADS','../files/');
 
@@ -63,15 +66,18 @@
 
 				$overwrite = false; // set to true, to overwrite an existing file; Default: false
 
-				$files = $web->receive (function($file, $formFieldName) use ($userID) {
-					global $database;
+				$files = $web->receive (function($file, $formFieldName) use ($userID, $files) {
 					$fileNameArray = explode("/", $file["name"]);
 					$fileName = $fileNameArray[count($fileNameArray)-1];
-					echo $fileName . " - " . $userID;
-					$result = $database->exec( "INSERT INTO `files` (`id`, `file_name`, `user_id`) VALUES (NULL, ?, " . $userID . ")", $fileName );
-					echo $result;
 
-					return true;
+					//INSERT file
+					$files->reset();
+					$files->file_name = $fileName;
+					$files->user_id = $userID;
+					$result = $files->save();
+
+					return $result;
+
 
 
 				        //var_dump($file);
@@ -97,6 +103,7 @@
 				    	return $hashname;
 				    }
 				);
+				$f3->reroute("/admin/user/" . $userID);
 
 			} else {
 				$f3->reroute('@home');
@@ -111,39 +118,46 @@
 	    }
 	);
 
+	$f3->route('GET /view/@filename', function ($f3, $params) {
+		//check session variables
 
-	//API
+		$web = \Web::instance();
+		$web->send("../files/" . $f3->get("PARAMS.filename"), NULL, 2048, false );
+	});
+
+	$f3->route('GET /download/@filename', function ($f3, $params) {
+		$web = \Web::instance();
+		$web->send("../files/" . $f3->get("PARAMS.filename"), NULL, 2048, true );
+    });
+
+
 	$f3->route("POST /v1-api/login", function($f3) {
 			if ($f3->exists("POST.username") && $f3->exists("POST.password")) {
 				global $database;
-				$result = $database->exec("SELECT * FROM users WHERE name=?", $f3->get("POST.username"));
-				print_r($result);
-				echo ($result[0]["admin"] == 1);
-				if (count($result) > 0 && $result[0]["password"] === $f3->get("POST.password")) { //hash post password
-					if ($result[0]["admin"]) {
-						$f3->set('SESSION.loggedIn', true);
+				global $users;
+				//get all non admin users
+				$users->reset();
+				$users->load(array('name=?', $f3->get("POST.username")));
+				echo ($users->admin == 1);
+				if ($users->password === $f3->get("POST.password")) { //hash post password
+					$f3->set('SESSION.loggedIn', true);
+					$f3->set('SESSION.user', $f3->get("POST.username"));
+					if ($users->admin) {
 						$f3->set('SESSION.admin', true);
-						$f3->set('SESSION.user', $f3->get("POST.username"));
-						//set session variables
-						//redirect to admin screen
 						$f3->reroute('@admin');
 					} else {
-						$f3->set('SESSION.loggedIn', true);
 						$f3->set('SESSION.admin', false);
-						$f3->set('SESSION.user', $f3->get("POST.username"));
-						//set session variables
-						//redirect to user screen
 						$f3->reroute('@user');
 					}
 				} else {
 					//redirect to home screen with incorrect username/password error
 					echo "incorrect username/password";
-					$f3->reroute('@home');
+					//$f3->reroute('@home');
 				}
 			} else {
 				//redirect to home screen missing username and/or password variables error
 				echo "missing username and/or password variables";
-				$f3->reroute('@home');
+				//$f3->reroute('@home');
 			}
 		}
 	);

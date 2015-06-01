@@ -1,17 +1,20 @@
 <div class="col-xs-12 admin-user-details page">
 	<div class="col-xs-6">
-		<repeat group="{{ @user_details }}" value="{{ @detail }}">
-		    <h3>{{@detail["name"]}}</h3>
-		</repeat>
+	    <h3>{{ @user_details["name"] }}</h3>
 	</div>
 
 	<div class="col-xs-6">
 		<form action="/admin/upload-file" method="post" enctype="multipart/form-data">
-		    Select image to upload for {{@detail["name"]}}:<br>
+		    Select image to upload for {{@user_details["name"]}}:<br>
 		    <input type="file" name="file" id="file"><br>
-		    <input type="hidden" name="user_id" value="{{ @detail['id'] }}"><br>
+		    <input type="hidden" name="user_id" value="{{ @user_details['id'] }}"><br>
 		    <input type="submit" name="submit">
 		</form>
 	</div>
 	
+	<div class="col-xs-6">
+		<repeat group="{{ @files }}" value="{{ @file }}">
+			<div> {{ @file["file_name"] }} <a href="/view/{{ @file["file_name"] }}"> view </a> <a href="/download/{{ @file["file_name"] }}"> download </a></div>
+		</repeat>
+	</div>
 </div>
