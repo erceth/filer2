@@ -1,0 +1,14 @@
+<table class="table">
+	<repeat group="{{ @all_reminders }}" value="{{ @reminder }}">
+		<tr>
+		    <td> {{ @reminder["text"] }}</td>
+		    <td> {{ @reminder["date"] }}</td>
+		    <td>
+		    	<form action="/admin" method="post">
+			    	<input type="hidden" name="reminderID" value="{{ @reminder['id'] }}">
+			    	<input type="submit" name="delete-reminder" value="delete">
+		    	</form>
+		    </td>
+		<tr>
+	</repeat>
+</table>

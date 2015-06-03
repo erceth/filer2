@@ -13,6 +13,8 @@
 	require_once($f3->get("CLASSES_PATH") . "/database.php");
 	require_once($f3->get("CLASSES_PATH") . "/user.php");
 	require_once($f3->get("CLASSES_PATH") . "/files.php");
+	require_once($f3->get("CLASSES_PATH") . "/reminders.php");
+	require_once($f3->get("CLASSES_PATH") . "/quotes.php");
 
 	$template = new Template;
 	echo $template->render($f3->get("TEMPLATE_PATH") . "/header.html");
@@ -62,8 +64,11 @@
 			global $users;
 			global $files;
 			global $database;
+			global $reminders;
+			global $quotes;
 
 			/*** check form submissions ***/
+			/*** new user ***/
 			if ($f3->get("POST.new-user")) {
 				$users->reset();
 				$users->load(array("username=?", $f3->get("POST.username")));
@@ -79,7 +84,7 @@
 					$users->save();
 				}
 			}
-
+			/*** delete user ***/
 			if ($f3->get("POST.delete-user")) {
 				//delete users files
 				$all_user_files = $files->find("user_id='" . $f3->get("POST.userID") . "'");
@@ -99,9 +104,42 @@
 				$database->exec("DELETE FROM files WHERE user_id=?", $userID);
 				$database->commit();
 			}
+			/*** new reminder ***/
+			if ($f3->get("POST.new-reminder")) {
+				$reminders->reset();
+				$reminders->text = $f3->get("POST.text");
+				$reminders->save();
+			}
+			/*** delete reminder ***/
+			if ($f3->get("POST.delete-reminder")) {
+				$reminders->reset();
+				$reminders->load(array("id=?", $f3->get("POST.reminderID")));
+				$reminders->erase();
+			}
+
+			/*** new quote ***/
+			if ($f3->get("POST.new-quote")) {
+				$quotes->reset();
+				$quotes->text = $f3->get("POST.text");
+				$quotes->save();
+			}
+			/*** delete quote ***/
+			if ($f3->get("POST.delete-quote")) {
+				$quotes->reset();
+				$quotes->load(array("id=?", $f3->get("POST.quoteID")));
+				$quotes->erase();
+			}
 
 			/*** get all non admin users ***/
 			$f3->set("users", $users->find(array('admin=?','0')) ); //set users for template use //TODO: turn this into a class method call
+
+			/*** get all reminders ***/
+			$f3->set("reminders_block", $f3->get("SNIPPETS_PATH") . "/reminders.html");
+			$f3->set("all_reminders", $reminders->find());
+
+			/*** get all quotes ***/
+			$quotes->reset();
+			$f3->set("all_quotes", $quotes->find());
 			
         	echo $template->render($f3->get("TEMPLATE_PATH") ."/admin.html");
 		} else {
@@ -186,6 +224,29 @@
 			$f3->reroute('@home');
 		}
     }
+
+    /**** REMINDER ****/
+
+    $f3->route("GET @reminder: /admin/reminder", "reminderPage");
+    //$f3->route("POST /admin/reminder", "reminderPage");
+
+    function reminderPage ($f3) {
+    	global $template;
+    	echo $template->render($f3->get("TEMPLATE_PATH") ."/reminder.html");	
+    }
+
+
+    /**** QUOTES ****/
+
+    $f3->route("GET @quotes: /admin/quotes", "quotePage");
+    //$f3->route("POST /admin/reminder", "reminderPage");
+
+    function quotePage ($f3) {
+    	global $template;
+    	echo $template->render($f3->get("TEMPLATE_PATH") ."/quote.html");	
+    }
+
+
 
 
     /**** USER ****/
@@ -275,7 +336,6 @@
 
 
 /*
-break up name into first and last name
 give option to name file on upload or keep date
 STYLING!
 user perspective
@@ -285,7 +345,7 @@ conform password
 hide logout link
 only allow audio uploads
 write to error log
-
+add date to reminders
 
 
 */

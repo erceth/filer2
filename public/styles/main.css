@@ -1,0 +1,17 @@
+/* from bootstrap */
+/* hom page blobs */
+.admin .students,
+.admin .new-student,
+.admin .reminder,
+.admin .new-reminder,
+.admin .quotes,
+.admin .new-quote {
+  height: 300px;
+}
+.admin .student-table,
+.admin .reminder-table,
+.admin .quote-table {
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid;
+}
