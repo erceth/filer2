@@ -1,0 +1,3 @@
+<repeat group="{{ @files }}" value="{{ @file }}">
+    <div> {{ @file["date"] }} <a target="_blank" href="/view/{{ @file['file_name'] }}"> view </a> <a href="/download/{{ @file['file_name'] }}"> download </a></div>
+</repeat>
