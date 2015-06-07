@@ -4,9 +4,11 @@
 		    <td> {{ @reminder["text"] }}</td>
 		    <td> {{ @reminder["date"] }}</td>
 		    <td>
-		    	<form action="/admin" method="post">
+		    	<form action="/admin#reminders" method="post">
 			    	<input type="hidden" name="reminderID" value="{{ @reminder['id'] }}">
-			    	<input type="submit" name="delete-reminder" value="delete">
+			    	<check if="{{ isset(@admin) }}">
+			    		<input type="submit" name="delete-reminder" value="delete">
+			    	</check>
 		    	</form>
 		    </td>
 		<tr>

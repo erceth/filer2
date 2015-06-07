@@ -1,3 +1,9 @@
-<repeat group="{{ @files }}" value="{{ @file }}">
-    <div> {{ @file["date"] }} <a target="_blank" href="/view/{{ @file['file_name'] }}"> view </a> <a href="/download/{{ @file['file_name'] }}"> download </a></div>
-</repeat>
+<table class="table file-table">
+	<repeat group="{{ @files }}" value="{{ @file }}">
+		<tr>
+	    	<td>{{ @file["date"] }}</td> 
+	    	<td><a target="_blank" href="/view/{{ @file['file_name'] }}"> view </a></td>
+	    	<td><a href="/download/{{ @file['file_name'] }}"> download </a></td>
+		</tr>
+	</repeat>
+</table>

@@ -30,13 +30,13 @@
 			<input type="password" name="password" placeholder="password"><br>
 			<input type="password" name="confirm-password" placeholder="confirm password"><br>
 			<input type="radio" name="admin" value="1"><label for="admin">admin</label>
-			<input type="radio" name="admin" value="0" checked="checked"><label for="admin">not admin</label>
+			<input type="radio" name="admin" value="0" checked="checked"><label for="admin">not admin</label><br>
 			<input type="submit" name="new-user" value="Create User">
 		</form>
 
 	</div>
 
-	<div class="reminder col-xs-12 col-sm-6">
+	<div id="reminders" class="reminder col-xs-12 col-sm-6">
 		<h3>Reminders</h3>
 		<div class="reminder-table">
 			<include href="{{ @reminders_block }}" />
@@ -48,7 +48,7 @@
 		<a href="/admin/reminder" class="btn btn-default">Create new reminder</a>
 	</div>
 
-	<div class="quotes col-xs-12 col-sm-6">
+	<div id="quote" class="quotes col-xs-12 col-sm-6">
 		<h3>All Quotes of the Day</h3>
 		<div class="quote-table">
 			<table class="table">
@@ -56,7 +56,7 @@
 					<tr>
 					    <td><div>{{ @quote["text"] }}</div></td>
 					    <td>
-						    <form action="/admin" method="post">
+						    <form action="/admin#quote" method="post">
 								<input type="hidden" name="quoteID" value="{{ @quote['id'] }}">
 								<input type="submit" name="delete-quote" value="delete">
 							</form>

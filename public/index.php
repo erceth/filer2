@@ -51,6 +51,7 @@
 		}
 
 		echo $template->render($f3->get("TEMPLATE_PATH") ."/home.html");
+		echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");
 	}
 
 
@@ -134,6 +135,7 @@
 			$f3->set("users", $users->find(array('admin=?','0')) ); //set users for template use //TODO: turn this into a class method call
 
 			/*** get all reminders ***/
+			$f3->set("admin", true);
 			$f3->set("reminders_block", $f3->get("SNIPPETS_PATH") . "/reminders.html");
 			$f3->set("all_reminders", $reminders->find());
 
@@ -142,6 +144,7 @@
 			$f3->set("all_quotes", $quotes->find());
 			
         	echo $template->render($f3->get("TEMPLATE_PATH") ."/admin.html");
+        	echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");
 		} else {
 			$f3->reroute('@home');
 		}
@@ -220,6 +223,7 @@
 			$f3->set("files", $files->find("user_id='" . $f3->get("PARAMS.userID") . "'"));
 			
         	echo $template->render($f3->get("TEMPLATE_PATH") ."/admin_user_details.html");
+        	echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");
 		} else {
 			$f3->reroute('@home');
 		}
@@ -232,7 +236,8 @@
 
     function reminderPage ($f3) {
     	global $template;
-    	echo $template->render($f3->get("TEMPLATE_PATH") ."/reminder.html");	
+    	echo $template->render($f3->get("TEMPLATE_PATH") ."/reminder.html");
+    	echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");	
     }
 
 
@@ -244,6 +249,7 @@
     function quotePage ($f3) {
     	global $template;
     	echo $template->render($f3->get("TEMPLATE_PATH") ."/quote.html");	
+    	echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");
     }
 
 
@@ -256,12 +262,18 @@
 		    	global $template;
 		    	global $users;
 		    	global $files;
+		    	global $reminders;
 
 		    	$f3->set("users_files", $f3->get("SNIPPETS_PATH") . "/users_files.html");
 		    	$users->load(array("id=?", $f3->get("SESSION.id") ))->copyTo("user_details");
 				$f3->set("files", $files->find("user_id='" . $f3->get("SESSION.id") . "'"));
 
+				/*** get all reminders ***/
+				$f3->set("all_reminders", $reminders->find());
+				$f3->set("reminders_block", $f3->get("SNIPPETS_PATH") . "/reminders.html");
+
 		        echo $template->render($f3->get("TEMPLATE_PATH") ."/user.html");
+		        echo $template->render($f3->get("TEMPLATE_PATH") ."/footer.html");
 		    } else {
 		    	$f3->reroute('@home');	
 		    }
@@ -329,23 +341,28 @@
 	// 	}
 	// );
 
+	$f3->set("quote_of_day", getQuoteOfTheDay());
+
 
 	$f3->run();
 
-	include $f3->get("TEMPLATE_PATH") . "/footer.html";
+
+
+
+	
 
 
 /*
 give option to name file on upload or keep date
 STYLING!
-user perspective
 test user security
 create 404, uncomment reroutes last
 conform password
 hide logout link
 only allow audio uploads
 write to error log
-add date to reminders
+-add date to reminders
+
 
 
 */
