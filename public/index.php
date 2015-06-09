@@ -17,6 +17,10 @@
 	require_once($f3->get("CLASSES_PATH") . "/quotes.php");
 
 	$template = new Template;
+	// print_r( $f3->get("SESSION.firstName")); 
+	// if ($f3->get("SESSION.firstName")) {
+	// 	$f3->set('firstName', $f3->get("SESSION.firstName"));
+	// }
 	echo $template->render($f3->get("TEMPLATE_PATH") . "/header.html");
 
 
@@ -27,6 +31,7 @@
 
 	function homePage($f3) {
 		global $template;
+		$f3->set("messages", array() );
 		if ($f3->get("POST.login") && $f3->exists("POST.username") && $f3->exists("POST.password")) {
 			global $database;
 			global $users;
@@ -36,6 +41,8 @@
 			if ($users->password === $f3->get("POST.password")) { //hash post password
 				$f3->set('SESSION.loggedIn', true);
 				$f3->set('SESSION.username', $f3->get("POST.username"));
+				$f3->set("SESSION.firstName", $users->first_name);
+				
 				$f3->set('SESSION.id', $users->id);
 
 				if ($users->admin) {
@@ -46,7 +53,7 @@
 					$f3->reroute('@user');
 				}
 			} else {
-				echo "incorrect username/password"; //TODO: change to f3 variable
+				$f3->push("messages", "incorrect username/password");
 			}
 		}
 
@@ -159,6 +166,20 @@
 			global $template;
 			global $users;
 			global $files;
+
+			/*** delete file ***/
+			if ($f3->get("POST.delete-file")) {
+				$files->load(array("id=?", $f3->get("POST.file_id")));
+				$fileName = "../files/" . $files->file_name;
+				if (is_file($fileName)) {
+					if(!unlink($fileName)) {
+						echo "problem deleting file " . $fileName;
+						return;
+					}
+					$files->erase();
+				}
+			}
+
 
 			/*** upload files ***/
 			if ($f3->get("POST.upload-file")) {

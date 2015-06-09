@@ -12,7 +12,15 @@
 <body class="preload">
     <div class="wrapper">
     	<div class="col-xs-12 header">
-			<a class="pull-right" href="/logout">logout</a>
+    		<h1 id="siteTitle" class="pull-left">Amber's Voices Lessons Practice</h1>
+    		<check if="{{ isset(@SESSION['firstName']) }}">
+    			<span class="logout pull-right">
+					<span>Signed in as {{ @SESSION['firstName'] }}</span><br>
+					<a class="pull-right" href="/logout">logout</a>
+				</span>
+			</check>
+			
+
 		</div>
         
         <div class="col-xs-12 mid">

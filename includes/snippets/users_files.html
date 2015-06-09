@@ -4,6 +4,15 @@
 	    	<td>{{ @file["date"] }}</td> 
 	    	<td><a target="_blank" href="/view/{{ @file['file_name'] }}"> view </a></td>
 	    	<td><a href="/download/{{ @file['file_name'] }}"> download </a></td>
+	    	<check if="{{ @SESSION['admin'] }}">
+	    		<td>
+		    		<form action="/admin/user/{{ @PARAMS['userID'] }}" method="POST">
+		    			<input type="hidden" name="file_id" value="{{ @file['id'] }}">
+		    			<input type="submit" name="delete-file" value="delete">
+		    		</form>
+		    	</td>
+	    	</check>
+	    	
 		</tr>
 	</repeat>
 </table>

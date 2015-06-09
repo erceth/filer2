@@ -1,6 +1,14 @@
 <div class="home page">
-	<form action="/" method="post">
-	<input type="text" name="username" placeholder="username" maxlength="30"><br>
-	<input type="password" name="password" password="password" placeholder="password" maxlength="30"><br>
-	<input type="submit" name="login" value="login">
+    <form action="/" method="post">
+        <input id="username" type="text" name="username" placeholder="username" maxlength="30">
+        <br>
+        <input id="password" type="password" name="password" password="password" placeholder="password" maxlength="30">
+        <br>
+        <input id="login" type="submit" name="login" value="Login" class="btn btn-default">
+        <br>
+        <div class="messages">
+            <repeat group="{{ @messages }}" value="{{ @message }}">
+                <p>{{ @message }}</p>
+            </repeat>
+        </div>
 </div>

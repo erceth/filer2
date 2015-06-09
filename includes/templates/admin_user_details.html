@@ -1,9 +1,15 @@
 <div class="col-xs-12 admin-user-details page">
-	<div class="col-xs-6">
+	<div class="col-xs-12">
 	    <h3>{{ @user_details["first_name"] }} {{ @user_details["last_name"] }}</h3>
 	</div>
 
-	<div class="col-xs-6">
+	<div class="col-xs-6 user-table">
+		<h3>Current Files</h3>
+		<include href="{{ @users_files }}" />
+	</div>
+
+	<div class="col-xs-6 upload-new">
+		<h3>Upload new file</h3>
 		<form action="/admin/user/{{ @user_details[id]}}" method="post" enctype="multipart/form-data">
 		    Select image to upload for {{ @user_details["first_name"] }} {{ @user_details["last_name"] }}:<br>
 		    <input type="file" name="file" id="file"><br>
@@ -12,9 +18,6 @@
 		</form>
 	</div>
 	
-	<div class="col-xs-6 user-table">
-		<include href="{{ @users_files }}" />
-	</div>
 	<div class="col-xs-12">
 		<a class="btn btn-default" href="/admin">back to admin</a>
 	</div>

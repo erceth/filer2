@@ -21,16 +21,38 @@
   width: 152px;
   color: gold;
 }
-.home input {
+.home #username,
+.home #password {
   margin-bottom: 30px;
   -webkit-transition: -webkit-box-shadow 0.5s;
   transition: box-shadow 0.5s;
 }
-.home input:focus,
-.home input:visited {
+.home #username:focus,
+.home #password:focus,
+.home #username.hasText,
+.home #password.hasText {
   -moz-box-shadow: inset 0 0 100px #000000;
   -webkit-box-shadow: inset 0 0 100px #000000;
   box-shadow: inset 0 0 100px #000000;
+}
+.home #login {
+  width: 152px;
+  background-color: #333;
+  color: #fff;
+}
+.home #login:hover {
+  background-color: #222;
+}
+.home .messages {
+  color: #fff;
+  padding-top: 30px;
+  position: absolute;
+}
+.admin-user-details .upload-new {
+  color: #fff;
+}
+.admin-user-details input[type="submit"] {
+  color: #000;
 }
 .files {
   height: 300px;
@@ -71,6 +93,14 @@ body {
   height: 100px;
   background: #fff;
 }
+.header #siteTitle {
+  font-size: 50px;
+  font-family: cursive;
+  font-weight: bold;
+}
+.header .logout {
+  margin-top: 30px;
+}
 .mid {
   padding-bottom: 100px;
   /* Height of the footer element */
@@ -81,7 +111,8 @@ body {
 .file-table {
   background: #fff;
 }
-h3 {
+h3,
+label {
   color: #fff;
 }
 .footer {
@@ -92,4 +123,8 @@ h3 {
   left: 0;
   color: #fff;
   background: #000;
+}
+.footer .quote-of-day {
+  position: absolute;
+  margin: 30px 0 0 30px;
 }

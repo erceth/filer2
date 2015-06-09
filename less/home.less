@@ -3,16 +3,29 @@
     margin-top: 30px;
     width: 152px;
     color: gold;
-    input {
+    #username, #password {
         margin-bottom: 30px;
 
         -webkit-transition: -webkit-box-shadow .5s;
 		transition: box-shadow .5s;
-        &:focus, &:visited {
+        &:focus, &.hasText {
 
             -moz-box-shadow: inset 0 0 100px #000000;
             -webkit-box-shadow: inset 0 0 100px #000000;
             box-shadow: inset 0 0 100px #000000;
         }
+    }
+    #login {
+    	width: 152px;
+    	background-color: #333;
+    	color: #fff;
+    	&:hover {
+    		background-color: #222;
+    	}
+    }
+    .messages {
+    	color: #fff;
+    	padding-top: 30px;
+    	position: absolute;
     }
 }
